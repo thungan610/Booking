@@ -1,0 +1,24 @@
+<h1>Danh sách lịch hẹn</h1>
+
+<table border="1" cellpadding="10">
+  <thead>
+    <tr>
+      <th>UUID</th>
+      <th>Doctor ID</th>
+      <th>Patient ID</th>
+      <th>Clinic ID</th>
+      <th>Hospital ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each appointments}}
+    <tr>
+      <td>{{this.uuid}}</td>
+      <td>{{this.doctor_id}}</td>
+      <td>{{this.patient_id}}</td>
+      <td>{{this.clinic_id}}</td>
+      <td>{{this.hospital_id}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
