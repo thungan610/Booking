@@ -1,0 +1,106 @@
+.appnene {
+    padding: 0 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end; 
+    margin-bottom: 15px;
+    gap: 15px;
+    
+  }
+  
+  .add-button {
+    background-color: #27aae1;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 36px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .add-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); 
+  }
+  .sale-table{
+    overflow: scroll;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    border: 1px solid rgba(155, 174, 202, 0.1);
+    text-align: center;
+    padding: 8px;
+  }
+  
+  table th {
+    background-color: rgba(155, 174, 202, 0.1);
+  }
+  
+  .editDiv {
+    display: flex;
+ 
+
+  }
+  
+  .editIcon,
+  .deleteIcon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+  }
+  
+  .editIcon {
+    background-color: #28a745;
+  }
+  
+  .editIcon:hover {
+    background-color: #218838;
+    transform: scale(1.1);
+  }
+  
+  img.edit {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .deleteIcon {
+    background-color: #ff3434;
+  }
+  
+  .deleteIcon:hover {
+    background-color: #c82333;
+    transform: scale(1.1);
+  }
+  
+  img.delete {
+    width: 20px;
+    height: 20px;
+  }
+
+.active-status {
+  color: green;        
+  font-weight: bold;  
+}
+
+.expired-status {
+  color: red;         
+  font-weight: bold;   
+}
+

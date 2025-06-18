@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../src/db'); // import kết nối MySQL
+const db = require('../DB/db'); // import kết nối MySQL
 
 router.get('/', (req, res) => {
   db.query('SELECT * FROM appointments', (err, results) => {
