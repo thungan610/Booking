@@ -1,4 +1,4 @@
-const MedicalServiceService = require("../service/medicalRecordService");
+const MedicalServiceService = require("../service/medical_service");
 const { getImageValue } = require("../helper/image.helper");
 
 class MedicalServiceController {
