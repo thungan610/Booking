@@ -58,10 +58,10 @@ router.delete(`/${specialization}/delete/:id`, SpecializationController.delete);
 // Clinic
 const clinic = "clinic";
 router.get(`/${clinic}/getAll`, clinicController.getAll);
-router.get(`/${clinic}/getById/:id`, clinicController.getById);
+router.get(`/${clinic}/getById/:uuid`, clinicController.getById);
 router.post(`/${clinic}/add`,upload.single('image'), clinicController.create); // vieets theem update
-router.put(`/${clinic}/update/:id`, clinicController.update);
-router.delete(`/${clinic}/delete/:id`, clinicController.delete);
+router.put(`/${clinic}/update/:uuid`, clinicController.update);
+router.delete(`/${clinic}/delete/:uuid`, clinicController.delete);
 
 // Appointment
 const appointment = "appointment";
@@ -116,8 +116,10 @@ const hospital = "hospital";
 router.get(`/${hospital}/getAll`, hospitalController.getAll);
 router.get(`/${hospital}/getById/:id`, hospitalController.getById);
 router.post(`/${hospital}/add`, upload.single('image'), hospitalController.create);
-router.put(`/${hospital}/update/:id`, upload.single('image'), hospitalController.update);
-router.delete(`/${hospital}/delete/:id`, hospitalController.delete);
+// router.put(`/${hospital}/update/:uuid`, upload.single('image'), hospitalController.update);
+router.put("/hospital/update/:uuid", upload.single("image"), hospitalController.update);
+// router.delete(`/${hospital}/delete/:id`, hospitalController.delete);
+router.delete("/hospital/delete/:uuid", hospitalController.delete);
 
 const medical_service = "medical_service";
 router.get(`/${medical_service}/getAll`, MedicalServiceController.getAll);

@@ -38,25 +38,24 @@ class ClinicController {
     }
   }
 
-  static async update(req, res) {
-    try {
-      const { name, address, phone, email, image, hospital_id } = req.body;
-      const imageValue = await getImageValue(req.file, image, "clinics");
-      const updated = await ClinicService.update(req.params.id, {
-        name,
-        address,
-        phone,
-        email,
-        image: imageValue,
-        hospital_id,
-      });
-      if (!updated)
-        return res.status(404).json({ code: 404, msg: "Không tìm thấy để cập nhật", status: "error" });
-      res.json({ code: 200, msg: "Cập nhật thành công", status: "success" });
-    } catch (error) {
-      res.status(error.statusCode || 400).json({ code: error.statusCode || 400, msg: error.message, status: "error" });
-    }
+  static async update(uuid, { name, address, phone, email, image, hospital_uuid }) {
+    // Ép mọi giá trị undefined thành null
+    name = name ?? null;
+    address = address ?? null;
+    phone = phone ?? null;
+    email = email ?? null;
+    image = image ?? null;
+    hospital_uuid = hospital_uuid ?? null;
+  
+    const [result] = await db.execute(
+      `UPDATE clinics 
+       SET name = ?, address = ?, phone = ?, email = ?, image = ?, hospital_uuid = ?, updated_at = NOW() 
+       WHERE uuid = ?`,
+      [name, address, phone, email, image, hospital_uuid, uuid]
+    );
+    return result.affectedRows > 0;
   }
+  
   static async delete(req, res) {
     try {
       const deleted = await ClinicService.remove(req.params.id);
