@@ -10,6 +10,7 @@ class ClinicController {
       res.status(500).json({ code: 500, msg: error.message, status: "error" });
     }
   }
+
   static async getById(req, res) {
     try {
       const data = await ClinicService.getById(req.params.id);
@@ -20,9 +21,10 @@ class ClinicController {
       res.status(500).json({ code: 500, msg: error.message, status: "error" });
     }
   }
-    static async create(req, res) {
+
+  static async create(req, res) {
     try {
-      const { name, address, phone, email, image, hospital_id } = req.body;
+      const { name, address, phone, email, image, hospital_uuid} = req.body;
       const imageValue = await getImageValue(req.file, image, "clinics");
       const result = await ClinicService.create({
         name,
@@ -30,7 +32,7 @@ class ClinicController {
         phone,
         email,
         image: imageValue,
-        hospital_id,
+        hospital_uuid,
       });
       res.status(201).json({ code: 201, msg: "Tạo thành công", status: "success", data: result });
     } catch (error) {
@@ -38,27 +40,30 @@ class ClinicController {
     }
   }
 
-  static async update(uuid, { name, address, phone, email, image, hospital_uuid }) {
-    // Ép mọi giá trị undefined thành null
-    name = name ?? null;
-    address = address ?? null;
-    phone = phone ?? null;
-    email = email ?? null;
-    image = image ?? null;
-    hospital_uuid = hospital_uuid ?? null;
-  
-    const [result] = await db.execute(
-      `UPDATE clinics 
-       SET name = ?, address = ?, phone = ?, email = ?, image = ?, hospital_uuid = ?, updated_at = NOW() 
-       WHERE uuid = ?`,
-      [name, address, phone, email, image, hospital_uuid, uuid]
-    );
-    return result.affectedRows > 0;
+  static async update(req, res) {
+    try {
+      const { name, address, phone, email, image, hospital_uuid } = req.body;
+
+      const imageValue = await getImageValue(req.file, image, "clinics");
+      const updated = await ClinicService.update(req.params.uuid, {
+        name,
+        address,
+        phone,
+        email,
+        image: imageValue,
+        hospital_uuid,
+      });
+      if (!updated)
+        return res.status(404).json({ code: 404, msg: "Không tìm thấy để cập nhật", status: "error" });
+      res.json({ code: 200, msg: "Cập nhật thành công", status: "success" });
+    } catch (error) {
+      res.status(error.statusCode || 400).json({ code: error.statusCode || 400, msg: error.message, status: "error" });
+    }
   }
-  
+
   static async delete(req, res) {
     try {
-      const deleted = await ClinicService.remove(req.params.id);
+      const deleted = await ClinicService.remove(req.params.uuid);
       if (!deleted)
         return res.status(404).json({ code: 404, msg: "Không tìm thấy để xóa", status: "error" });
       res.json({ code: 200, msg: "Xóa thành công", status: "success" });
@@ -67,4 +72,5 @@ class ClinicController {
     }
   }
 }
+
 module.exports = ClinicController;

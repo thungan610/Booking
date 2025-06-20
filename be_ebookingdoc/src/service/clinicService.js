@@ -36,23 +36,16 @@ class ClinicService {
   }
 
   static async update(uuid, { name, address, phone, email, image, hospital_id }) {
-    // Bảo vệ tất cả giá trị khỏi undefined
-    name = name ?? null;
-    address = address ?? null;
-    phone = phone ?? null;
-    email = email ?? null;
-    image = image ?? null;
-    hospital_id = hospital_id ?? null;
+  const [result] = await db.execute(
+    `UPDATE clinics
+     SET name=?, address=?, phone=?, email=?, image=?, hospital_id=?, updated_at=NOW()
+     WHERE uuid=?`,
+    [name, address, phone, email, image, hospital_id, uuid]
+  );
+  return result.affectedRows > 0;
+}
 
-    const [result] = await db.execute(
-      `UPDATE clinics 
-       SET name = ?, address = ?, phone = ?, email = ?, image = ?, hospital_id = ?, updated_at = NOW() 
-       WHERE uuid = ?`,
-      [name, address, phone, email, image, hospital_id, uuid]
-    );
-    return result.affectedRows > 0;
-  }
-
+  
   static async remove(uuid) {
     if (!uuid) throw new Error("Thiếu UUID khi xoá phòng ban!");
     const [result] = await db.execute("DELETE FROM clinics WHERE uuid = ?", [uuid]);
