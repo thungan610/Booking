@@ -21,15 +21,43 @@ class MedicalServiceService {
     return { uuid, name, description, price, specialization_id, clinic_id, hospital_id, image };
   }
   
-    static async update(uuid, { name, description, price, specialization_id, clinic_id, hospital_id, image }) {
-      const [result] = await db.execute(
-        `UPDATE medical_services
-         SET name=?, description=?, price=?, specialization_id=?, clinic_id=?, hospital_id=?, image=?, updated_at=NOW()
-         WHERE uuid=?`,
-        [name, description, price, specialization_id, clinic_id, hospital_id, image, uuid]
-      );
-      return result.affectedRows > 0;
+  static async update(
+    uuid,
+    {
+      name,
+      description,
+      price,
+      specialization_id,
+      clinic_id,
+      hospital_id,
+      image,
     }
+  ) {
+
+    if (!uuid) throw new Error("Thiếu UUID để cập nhật");
+    if (!name || !price) throw new Error("Tên và giá là bắt buộc");
+  
+    
+    const values = [
+      name || null,
+      description || null,
+      price || 0,
+      specialization_id || null,
+      clinic_id || null,
+      hospital_id || null,
+      image || null,
+      uuid,
+    ];
+  
+    const [result] = await db.execute(
+      `UPDATE medical_services
+       SET name=?, description=?, price=?, specialization_id=?, clinic_id=?, hospital_id=?, image=?, updated_at=NOW()
+       WHERE uuid=?`,
+      values
+    );
+  
+    return result.affectedRows > 0;
+  }
   
   
   static async remove(uuid) {

@@ -126,7 +126,7 @@ router.get(`/${medical_service}/getAll`, MedicalServiceController.getAll);
 router.get(`/${medical_service}/getById/:uuid`, MedicalServiceController.getById);
 // router.post(`/${medical_service}/add`, upload.single('image'), MedicalServiceController.create);
 router.post("/medical_service/create", MedicalServiceController.create);
-// router.put(`/${medical_service}/update/:uuid`, upload.single('image'), MedicalServiceController.update);
+router.put(`/${medical_service}/update/:uuid`, upload.single('image'), MedicalServiceController.update);
 
 router.delete(`/${medical_service}/delete/:uuid`, MedicalServiceController.delete);
 
