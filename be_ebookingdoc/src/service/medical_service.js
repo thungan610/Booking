@@ -20,13 +20,18 @@ class MedicalServiceService {
     );
     return { uuid, name, description, price, specialization_id, clinic_id, hospital_id, image };
   }
-  static async update(uuid, { name, description, price, specialization_id, clinic_id, hospital_id, image }) {
-    const [result] = await db.execute(
-      "UPDATE medical_services SET name=?, description=?, price=?, specialization_id=?, clinic_id=?, hospital_id=?, image=?, updated_at=NOW() WHERE uuid=?",
-      [name, description, price, specialization_id, clinic_id, hospital_id, image, uuid]
-    );
-    return result.affectedRows > 0;
-  }
+  
+    static async update(uuid, { name, description, price, specialization_id, clinic_id, hospital_id, image }) {
+      const [result] = await db.execute(
+        `UPDATE medical_services
+         SET name=?, description=?, price=?, specialization_id=?, clinic_id=?, hospital_id=?, image=?, updated_at=NOW()
+         WHERE uuid=?`,
+        [name, description, price, specialization_id, clinic_id, hospital_id, image, uuid]
+      );
+      return result.affectedRows > 0;
+    }
+  
+  
   static async remove(uuid) {
     const [result] = await db.execute("DELETE FROM medical_services WHERE uuid = ?", [uuid]);
     return result.affectedRows > 0;

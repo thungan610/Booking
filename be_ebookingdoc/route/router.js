@@ -123,10 +123,12 @@ router.delete("/hospital/delete/:uuid", hospitalController.delete);
 
 const medical_service = "medical_service";
 router.get(`/${medical_service}/getAll`, MedicalServiceController.getAll);
-router.get(`/${medical_service}/getById/:id`, MedicalServiceController.getById);
-router.post(`/${medical_service}/add`, upload.single('image'), MedicalServiceController.create);
-router.put(`/${medical_service}/update/:id`, upload.single('image'), MedicalServiceController.update);
-router.delete(`/${medical_service}/delete/:id`, MedicalServiceController.delete);
+router.get(`/${medical_service}/getById/:uuid`, MedicalServiceController.getById);
+// router.post(`/${medical_service}/add`, upload.single('image'), MedicalServiceController.create);
+router.post("/medical_service/create", MedicalServiceController.create);
+// router.put(`/${medical_service}/update/:uuid`, upload.single('image'), MedicalServiceController.update);
+
+router.delete(`/${medical_service}/delete/:uuid`, MedicalServiceController.delete);
 
 
 const select_profile = "select_profile";
