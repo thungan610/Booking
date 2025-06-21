@@ -60,7 +60,12 @@ const clinic = "clinic";
 router.get(`/${clinic}/getAll`, clinicController.getAll);
 router.get(`/${clinic}/getById/:uuid`, clinicController.getById);
 router.post(`/${clinic}/add`,upload.single('image'), clinicController.create); // vieets theem update
-router.put(`/${clinic}/update/:uuid`, clinicController.update);
+// router.put(`/${clinic}/update/:uuid`, clinicController.update);
+router.put(`/${clinic}/update/:uuid`, upload.single('image'), clinicController.update);
+
+
+router.put("/clinic/update/:uuid", clinicController.update);
+
 router.delete(`/${clinic}/delete/:uuid`, clinicController.delete);
 
 // Appointment

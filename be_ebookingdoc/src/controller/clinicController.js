@@ -42,24 +42,48 @@ class ClinicController {
 
   static async update(req, res) {
     try {
-      const { name, address, phone, email, image, hospital_uuid } = req.body;
-
+      const {
+        name = null,
+        address = null,
+        phone = null,
+        email = null,
+        image = null,
+        hospital_uuid = null,
+      } = req.body;
+  
       const imageValue = await getImageValue(req.file, image, "clinics");
+  
       const updated = await ClinicService.update(req.params.uuid, {
         name,
         address,
         phone,
         email,
-        image: imageValue,
-        hospital_uuid,
+        image: imageValue ?? null,
+        hospital_id: hospital_uuid ?? null, // 🚨 Chú ý: DB là hospital_id
       });
+  
       if (!updated)
-        return res.status(404).json({ code: 404, msg: "Không tìm thấy để cập nhật", status: "error" });
-      res.json({ code: 200, msg: "Cập nhật thành công", status: "success" });
+        return res.status(404).json({
+          code: 404,
+          msg: "Không tìm thấy để cập nhật",
+          status: "error",
+        });
+  
+      res.json({
+        code: 200,
+        msg: "Cập nhật thành công",
+        status: "success",
+      });
     } catch (error) {
-      res.status(error.statusCode || 400).json({ code: error.statusCode || 400, msg: error.message, status: "error" });
+      console.error("Update lỗi:", error); // Để dễ debug hơn
+      res.status(error.statusCode || 400).json({
+        code: error.statusCode || 400,
+        msg: error.message,
+        status: "error",
+      });
     }
   }
+  
 
   static async delete(req, res) {
     try {
