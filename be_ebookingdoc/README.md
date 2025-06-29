@@ -1,2 +1,0 @@
-chay project 
-npm start
